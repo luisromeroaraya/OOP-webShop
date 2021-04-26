@@ -47,12 +47,48 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                ...
+                    <form class="form-register" action="" method="POST">
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                             </div>
+                            <input name="name" class="form-control" placeholder="Full name" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                             </div>
+                            <input name="email" class="form-control" placeholder="Email address" type="email">
+                        </div> <!-- form-group// -->
+                        <!-- <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                            </div>
+                            <input name="" class="form-control" placeholder="Phone number" type="text">
+                        </div> form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input name="password" class="form-control" placeholder="Create password" type="password">
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input name="repeatpassword" class="form-control" placeholder="Repeat password" type="password">
+                        </div> <!-- form-group// -->
+                        <hr class="my-4">
+                        <div class="form-group">
+                            <button name="register" type="submit" class="btn btn-lg btn-success btn-block text-uppercase">Register</button>
+                        </div> <!-- form-group// -->      
+                        <!-- <p class="text-center">Have an account? <a href="">Log In</a> </p> -->
+                    </form>
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Register</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -68,20 +104,24 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-signin" action="" method="POST">
-                        <div class="form-label-group">
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                        <label for="inputEmail">Email address</label>
-                        </div>
-                        <div class="form-label-group">
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                        <label for="inputPassword">Password</label>
-                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                             </div>
+                            <input name="email" class="form-control" placeholder="Email address" type="email">
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input name="password" class="form-control" placeholder="Enter password" type="password">
+                        </div> <!-- form-group// -->
                         <!-- <div class="custom-control custom-checkbox mb-3">
                         <input type="checkbox" class="custom-control-input" id="customCheck1">
                         <label class="custom-control-label" for="customCheck1">Remember password</label>
                         </div> -->
                         <hr class="my-4">
-                        <button class="btn btn-lg btn-success btn-block text-uppercase" name="signin" type="submit">Sign in</button>
+                        <button name="signin" type="submit" class="btn btn-lg btn-success btn-block text-uppercase">Sign in</button>
                     </form>
                 </div>
                 <!-- <div class="modal-footer">

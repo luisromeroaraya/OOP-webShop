@@ -1,9 +1,6 @@
 <?php
 
     $errorMSG = "";
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre><br>";
 
     // NAME
     if (empty($_POST["name"])) {
@@ -57,7 +54,8 @@
 
     // send email
     $success = mail($EmailTo, $Subject, $Body, "From:".$email);
-
+    var_dump($success);
+    
     // redirect to success page
     if ($success && $errorMSG == ""){
         echo "success";
@@ -68,5 +66,4 @@
             echo $errorMSG;
         }
     }
-
 ?>

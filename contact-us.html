@@ -220,7 +220,7 @@
                     <div class="contact-form-right">
                         <h2>GET IN TOUCH</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio justo, ultrices ac nisl sed, lobortis porta elit. Fusce in metus ac ex venenatis ultricies at cursus mauris.</p>
-                        <form id="contactForm">
+                        <form id="contactForm" action="/php/form-process.php" method="POST">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -230,19 +230,20 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Your Email" required data-error="Please enter your email">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
+                                        <input type="text" class="form-control" id="subject" name="msg_subject" placeholder="Subject" required data-error="Please enter a subject">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <textarea class="form-control" id="message" placeholder="Your Message" rows="4" data-error="Write your message" required></textarea>
+                                        <textarea class="form-control" id="message" name="message" placeholder="Your Message" rows="4" data-error="Write your message" required></textarea>
                                         <div class="help-block with-errors"></div>
                                     </div>
                                     <div class="submit-button text-center">
@@ -460,21 +461,23 @@
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
     <!-- ALL JS FILES -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- ALL PLUGINS -->
-    <script src="js/jquery.superslides.min.js"></script>
-    <script src="js/bootstrap-select.js"></script>
-    <script src="js/inewsticker.js"></script>
-    <script src="js/bootsnav.js."></script>
-    <script src="js/images-loded.min.js"></script>
-    <script src="js/isotope.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/baguetteBox.min.js"></script>
-    <script src="js/form-validator.min.js"></script>
-    <script src="js/contact-form-script.js"></script>
-    <script src="js/custom.js"></script>
+    <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="js/jquery.superslides.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/inewsticker.js"></script>
+    <script type="text/javascript" src="js/bootsnav.js"></script>
+    <script type="text/javascript" src="js/images-loded.min.js"></script>
+    <script type="text/javascript" src="js/isotope.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="js/baguetteBox.min.js"></script>
+    <script type="text/javascript" src="js/form-validator.min.js"></script>
+    <script type="text/javascript" src="js/contact-form-script.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
 </body>
 
 </html>

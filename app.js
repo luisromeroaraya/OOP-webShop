@@ -4,18 +4,15 @@
 // IMPORT ENV CONFIG FILE
 require('dotenv').config();
 
+// SET UP PORT
+const port = process.env.PORT || 3000; // port will use the environment PORT if is set or else 3000
+
 // IMPORT EXPRESS
 const express = require("express");
 const app = express();
 
 // IMPORT EXPRESS HANDBLEBARS
 const exphbs = require("express-handlebars");
-
-// IMPORT ROUTER
-const router = require("./routers/router");
-
-// SET UP PORT
-const port = process.env.PORT || 3000; // port will use the environment PORT if is set or else 3000
 
 // BODY PARSER
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +26,8 @@ app.use("/images", express.static(__dirname + "public/images"));
 app.use("/php", express.static(__dirname + "public/php"));
 app.use("/webfonts", express.static(__dirname + "public/webfonts"));
 
-// CONNECT TO ROUTER
+// IMPORT AND CONNECT TO ROUTER
+const router = require("./routers/router");
 app.use("/", router);
 
 // CREATE CONNECTION POOL TO DB

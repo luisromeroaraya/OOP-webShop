@@ -10,37 +10,37 @@ const pool = mysql.createPool({
 
 // VIEWS
 exports.renderHomePage = (req, res) => {
-    res.render(process.cwd() + "/views/index");
+    res.render(process.cwd() + "/views/index", {home : true});
 };
 exports.renderAboutPage = (req,res) => {
-    res.render(process.cwd() + "/views/about");
+    res.render(process.cwd() + "/views/about", {about : true});
 };
 exports.renderCartPage = (req,res) => {
-    res.render(process.cwd() + "/views/cart");
+    res.render(process.cwd() + "/views/cart", {shop : true});
 };
 exports.renderCheckoutPage = (req,res) => {
-    res.render(process.cwd() + "/views/checkout");
+    res.render(process.cwd() + "/views/checkout", {shop : true});
 };
 exports.renderContactUsPage = (req,res) => {
-    res.render(process.cwd() + "/views/contact-us");
+    res.render(process.cwd() + "/views/contact-us", {contact : true});
 };
 exports.renderGalleryPage = (req,res) => {
-    res.render(process.cwd() + "/views/gallery");
+    res.render(process.cwd() + "/views/gallery", {gallery : true});
 };
 exports.renderIndexPage = (req,res) => {
-    res.render(process.cwd() + "/views/index");
+    res.render(process.cwd() + "/views/index", {home : true});
 };
 exports.renderMyAccountPage = (req,res) => {
-    res.render(process.cwd() + "/views/my-account");
+    res.render(process.cwd() + "/views/my-account", {shop : true});
 };
 exports.renderShopDetailPage = (req,res) => {
-    res.render(process.cwd() + "/views/shop-detail");
+    res.render(process.cwd() + "/views/shop-detail", {shop : true});
 };
 exports.renderShopPage = (req,res) => {
-    res.render(process.cwd() + "/views/shop");
+    res.render(process.cwd() + "/views/shop", {shop : true});
 };
 exports.renderWishListPage = (req,res) => {
-    res.render(process.cwd() + "/views/wishlist");
+    res.render(process.cwd() + "/views/wishlist", {shop : true});
 };
 
 // POST handler

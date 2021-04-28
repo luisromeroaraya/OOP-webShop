@@ -1,0 +1,39 @@
+<!-- Sign In Modal -->
+<div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="signinModalLabel">Sign In</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-signin" action="/" method="POST">
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            </div>
+                        <input name="email" class="form-control" placeholder="Email address" type="email">
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+                        <input name="password" class="form-control" placeholder="Enter password" type="password">
+                    </div> <!-- form-group// -->
+                    <!-- <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Remember password</label>
+                    </div> -->
+                    <hr class="my-4">
+                    <button name="signin" type="submit" class="btn btn-lg btn-success btn-block text-uppercase">Sign in</button>
+                </form>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Sign In</button>
+            </div> -->
+        </div>
+    </div>
+</div>

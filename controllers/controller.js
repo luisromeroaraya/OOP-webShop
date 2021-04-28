@@ -10,37 +10,37 @@ const pool = mysql.createPool({
 
 // VIEWS
 exports.renderHomePage = (req, res) => {
-    res.sendFile(process.cwd() + "/views/index.html");
+    res.render(process.cwd() + "/views/index");
 };
 exports.renderAboutPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/about.html");
+    res.render(process.cwd() + "/views/about");
 };
 exports.renderCartPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/cart.html");
+    res.render(process.cwd() + "/views/cart");
 };
 exports.renderCheckoutPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/checkout.html");
+    res.render(process.cwd() + "/views/checkout");
 };
 exports.renderContactUsPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/contact-us.html");
+    res.render(process.cwd() + "/views/contact-us");
 };
 exports.renderGalleryPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/gallery.html");
+    res.render(process.cwd() + "/views/gallery");
 };
 exports.renderIndexPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/index.html");
+    res.render(process.cwd() + "/views/index");
 };
 exports.renderMyAccountPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/my-account.html");
+    res.render(process.cwd() + "/views/my-account");
 };
 exports.renderShopDetailPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/shop-detail.html");
+    res.render(process.cwd() + "/views/shop-detail");
 };
 exports.renderShopPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/shop.html");
+    res.render(process.cwd() + "/views/shop");
 };
 exports.renderWishListPage = (req,res) => {
-    res.sendFile(process.cwd() + "/views/wishlist.html");
+    res.render(process.cwd() + "/views/wishlist");
 };
 
 // POST handler
@@ -68,7 +68,7 @@ exports.post = (req, res) => {
                 console.log("Registration succesful.");
             });
         });
-        res.sendFile(process.cwd() + "/views/index.html");
+        res.render(process.cwd() + "/views/index");
     }
     else if (req.body.signin == "") {
         res.send("Sign in succesful.");

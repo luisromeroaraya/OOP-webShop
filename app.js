@@ -7,27 +7,12 @@ require('dotenv').config();
 // SET UP PORT
 const port = process.env.PORT || 3000; // port will use the environment PORT if is set or else 3000
 
-// IMPORT EXPRESS
+// IMPORTS
 const express = require("express");
-const app = express();
-
-// IMPORT EXPRESS SESSION
 const session = require("express-session");
-app.use(session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 2,
-        sameSite: true,
-        secure: false
-    }
-}));
-
-// IMPORT EXPRESS HANDBLEBARS
 const exphbs = require("express-handlebars");
-app.engine('hbs', exphbs({ extname: '.hbs' }));
-app.set('view engine', 'hbs');
+const router = require("./routers/router");
+const app = express();
 
 // BODY PARSER
 app.use(express.urlencoded({ extended: true }));
@@ -41,29 +26,41 @@ app.use("/images", express.static(__dirname + "public/images"));
 app.use("/php", express.static(__dirname + "public/php"));
 app.use("/webfonts", express.static(__dirname + "public/webfonts"));
 
-// IMPORT AND CONNECT TO ROUTER
-const router = require("./routers/router");
+// TEMPLATE ENGINE EXPRESS HANDBLEBARS
+app.engine('hbs', exphbs({ extname: '.hbs' }));
+app.set('view engine', 'hbs');
+
+// SESSION
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 2,
+        sameSite: true,
+        secure: false
+    }
+}));
+
+// CONNECT TO ROUTER
 app.use("/", router);
 
-// CREATE CONNECTION POOL TO DB
-const mysql = require("mysql");
-const pool = mysql.createPool({
-    connectionLimit: 100,
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
+// ERRORS => PAGE NOT FOUND 404
+app.use((req, res, next) =>  {
+    var err = new Error('Page not found');
+    err.status = 404;
+    next(err);
 });
 
-// CONNECT TO DB
-pool.getConnection((err, connection) => {
-    if (err) {
-        throw err;
-    }
-    console.log(`Connected to database as ID: ${connection.threadId}`);
+// HANDLING ERRORS
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send(err.message);
 });
 
-// SET UP LISTENER (SERVER)
+// SET UP SERVER
 app.listen(port, () => {
     console.info(`Listening on port ${port}...`);
 });
+
+module.exports = app;

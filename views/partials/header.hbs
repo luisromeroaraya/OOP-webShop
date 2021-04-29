@@ -23,11 +23,20 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-box">
+                    {{#if login }}
+                    <form action="/logout" method="post">
+                    <select id="basic" class="selectpicker form-control" name="signin" data-placeholder="Sign In" onchange="this.form.submit()">
+                        <option selected disabled hidden style="display: none;">Log Out</option>
+                        <option>Log Out</option>
+                    </select>
+                    </form>
+                    {{else}}
                     <select id="basic" class="selectpicker form-control" name="signin" data-placeholder="Sign In" onchange="if(this.selectedIndex == 1){$('#registerModal').modal('toggle');}else if(this.selectedIndex == 2){$('#signinModal').modal('toggle');}">
                         <option selected disabled hidden style="display: none;">Sign In</option>
                         <option>Register Here</option>
                         <option>Sign In</option>
                     </select>
+                    {{/if}}
                 </div>
                 <div class="text-slid-box">
                     <div id="offer-box" class="carouselTicker">
@@ -148,7 +157,11 @@
     <!-- End Navigation -->
 </header>
 <!-- End Main Top -->
-
+{{#if errorMessage }}
+<div class="container text-center">
+    <h2>{{errorMessage}}</h2>
+</div>
+{{/if}}
 <!-- Start Top Search -->
 <div class="top-search">
     <div class="container">

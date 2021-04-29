@@ -10,37 +10,77 @@ const pool = mysql.createPool({
 
 // VIEWS
 exports.renderHomePage = (req, res) => {
-    res.render(process.cwd() + "/views/index", {home : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/index", {home : true, login});
 };
 exports.renderAboutPage = (req,res) => {
-    res.render(process.cwd() + "/views/about", {about : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/about", {about : true, login});
 };
 exports.renderCartPage = (req,res) => {
-    res.render(process.cwd() + "/views/cart", {shop : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/cart", {shop : true, login});
 };
 exports.renderCheckoutPage = (req,res) => {
-    res.render(process.cwd() + "/views/checkout", {shop : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/checkout", {shop : true, login});
 };
 exports.renderContactUsPage = (req,res) => {
-    res.render(process.cwd() + "/views/contact-us", {contact : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/contact-us", {contact : true, login});
 };
 exports.renderGalleryPage = (req,res) => {
-    res.render(process.cwd() + "/views/gallery", {gallery : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/gallery", {gallery : true, login});
 };
 exports.renderIndexPage = (req,res) => {
-    res.render(process.cwd() + "/views/index", {home : true});
+    res.redirect('/');
 };
 exports.renderMyAccountPage = (req,res) => {
-    res.render(process.cwd() + "/views/my-account", {shop : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/my-account", {shop : true, login});
 };
 exports.renderShopDetailPage = (req,res) => {
-    res.render(process.cwd() + "/views/shop-detail", {shop : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/shop-detail", {shop : true, login});
 };
 exports.renderShopPage = (req,res) => {
-    res.render(process.cwd() + "/views/shop", {shop : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/shop", {shop : true, login});
 };
 exports.renderWishListPage = (req,res) => {
-    res.render(process.cwd() + "/views/wishlist", {shop : true});
+    let login = false;
+    if (req.session.userId) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/wishlist", {shop : true, login});
 };
 
 // POST handler
@@ -56,7 +96,7 @@ exports.post = (req, res) => {
             email: req.body.email,
             password: req.body.password
         }
-        pool.getConnection((err, connection) => { // CONNECT TO DB AND ADD USER TO DB
+        pool.getConnection((err, connection) => { // CONNECT TO DB AND ADD USER
             if (err) {
                 throw err;
             }
@@ -68,16 +108,41 @@ exports.post = (req, res) => {
                 console.log("Registration succesful.");
             });
         });
-        res.render(process.cwd() + "/views/index");
+        req.session.userId = 1;
+        res.redirect('/');
     }
     else if (req.body.signin == "") {
-        res.send("Sign in succesful.");
         const user = {
             email: req.body.email,
             password: req.body.password
         }
+        pool.getConnection((err, connection) => { // CONNECT TO DB AND SEARCH FOR USER
+            if (err) {
+                throw err;
+            }
+            const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            connection.query(sql, [user.email, user.password], (err, res) => {
+                if (err) {
+                    throw err;
+                }
+                const result = JSON.parse(JSON.stringify(res))[0];
+                if (result) {
+                    console.log(`Sign in succesful for user: ${result.id}`);
+                }
+            });
+        });
+        req.session.userId = 1;
+        res.redirect('/');
     }
-    console.log(req.body);
+};
+
+// LOGOUT
+exports.logout = (req, res) => {
+    console.log(req.get('cookie'));
+    req.session.destroy(err => {
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
 };
 
 // VALIDATION function using Joi

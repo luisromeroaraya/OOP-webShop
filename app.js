@@ -11,6 +11,19 @@ const port = process.env.PORT || 3000; // port will use the environment PORT if 
 const express = require("express");
 const app = express();
 
+// IMPORT EXPRESS SESSION
+const session = require("express-session");
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 2,
+        sameSite: true,
+        secure: false
+    }
+}));
+
 // IMPORT EXPRESS HANDBLEBARS
 const exphbs = require("express-handlebars");
 app.engine('hbs', exphbs({ extname: '.hbs' }));

@@ -21,7 +21,8 @@ router.get("/shop-detail.html", controller.renderShopDetailPage);
 router.get("/shop.html", controller.renderShopPage);
 router.get("/wishlist.html", controller.renderWishListPage);
 
-router.post("/", controller.post);
+router.post("/register", controller.register);
+router.post("/signin", controller.signin);
 router.post("/logout", controller.logout);
 
 module.exports = router;

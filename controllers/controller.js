@@ -83,57 +83,56 @@ exports.renderWishListPage = (req,res) => {
     res.render(process.cwd() + "/views/wishlist", {shop : true, login});
 };
 
-// POST handler
-exports.post = (req, res) => {
-    if (req.body.register == "") {
-        const validation = validateUser(req.body);
-        if (validation.error) { // if body doesn"t exist or name too short then 400 Bad request
-            res.status(400).send(validation.error.details[0].message);
-            return;
+// POST handlers
+exports.register = (req, res) => {
+    const validation = validateUser(req.body);
+    if (validation.error) { // if body doesn"t exist or name too short then 400 Bad request
+        res.status(400).send(validation.error.details[0].message);
+        return;
+    }
+    const user = {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    }
+    pool.getConnection((err, connection) => { // CONNECT TO DB AND ADD USER
+        if (err) {
+            throw err;
         }
-        const user = {
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        }
-        pool.getConnection((err, connection) => { // CONNECT TO DB AND ADD USER
+        const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+        connection.query(sql, [user.name, user.email, user.password], (err, res) => {
             if (err) {
                 throw err;
             }
-            const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-            connection.query(sql, [user.name, user.email, user.password], (err, res) => {
-                if (err) {
-                    throw err;
-                }
-                console.log("Registration succesful.");
-            });
+            console.log("Registration succesful.");
         });
-        req.session.userId = 1;
-        res.redirect('/');
+    });
+    req.session.userId = 1;
+    res.redirect('/');
+};
+
+exports.signin = (req, res) => {
+    const user = {
+        email: req.body.email,
+        password: req.body.password
     }
-    else if (req.body.signin == "") {
-        const user = {
-            email: req.body.email,
-            password: req.body.password
+    pool.getConnection((err, connection) => { // CONNECT TO DB AND SEARCH FOR USER
+        if (err) {
+            throw err;
         }
-        pool.getConnection((err, connection) => { // CONNECT TO DB AND SEARCH FOR USER
+        const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+        connection.query(sql, [user.email, user.password], (err, res) => {
             if (err) {
                 throw err;
             }
-            const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-            connection.query(sql, [user.email, user.password], (err, res) => {
-                if (err) {
-                    throw err;
-                }
-                const result = JSON.parse(JSON.stringify(res))[0];
-                if (result) {
-                    console.log(`Sign in succesful for user: ${result.id}`);
-                }
-            });
+            const result = JSON.parse(JSON.stringify(res))[0];
+            if (result) {
+                console.log(`Sign in succesful for user: ${result.id}`);
+            }
         });
-        req.session.userId = 1;
-        res.redirect('/');
-    }
+    });
+    req.session.userId = 1;
+    res.redirect('/');
 };
 
 // LOGOUT

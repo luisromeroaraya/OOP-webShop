@@ -47,7 +47,7 @@ app.use("/", router);
 
 // ERRORS => PAGE NOT FOUND 404
 app.use((req, res, next) =>  {
-    var err = new Error('Page not found');
+    var err = new Error('Page not found.');
     err.status = 404;
     next(err);
 });

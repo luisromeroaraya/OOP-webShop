@@ -16,7 +16,7 @@ pool.getConnection((err, connection) => {
         throw err;
     }
     if(connection) {
-        console.log(`Connected to database as ID: ${connection.threadId}`);
+        console.log(`Connected to database as ID: ${connection.threadId}.`);
         connection.release();
     }
     return;

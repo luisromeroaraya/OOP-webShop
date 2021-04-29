@@ -8,6 +8,7 @@ const user = new User();
 exports.renderHomePage = (req, res) => {
     let login = false;
     let user = req.session.user;
+    console.log(user);
     if (user) {
         login = true;
     }
@@ -105,26 +106,30 @@ exports.register = async (req, res) => {
         if(lastId) { // Get the user data by it's id and store it in a session
             user.find(lastId, (result) => {
                 req.session.user = result;
+                console.log(result);
+                console.log(`Registration succesful.`);
+                res.redirect('/'); // redirect user to home
             });
         }
         else {
             console.log('Error creating a new user...');
         }
     });
-    res.redirect('/'); // redirect user to home
 };
 
 // POST SIGN IN
 exports.signin = (req, res, next) => {
-    user.signin(req.body.username, req.body.password, (result) => {
-        if (result) {
-            req.session.user = result;
+    user.signin(req.body.username, req.body.password, (rows) => {
+        if (rows) {
+            req.session.user = rows;
+            console.log(req.session.user);
+            console.log(`Signed in as ${req.session.user.username}.`);
+            res.redirect('/'); // redirect user to home
         }
         else {
             console.log("Wrong username or password.");
         }
     })
-    res.redirect('/'); // redirect user to home
 };
 
 // POST LOGOUT

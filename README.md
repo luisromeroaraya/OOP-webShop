@@ -18,15 +18,15 @@ Freshshop already owns the frontend part of the project. You must now implement 
 
 - All the features of the home page must work
 
-  - Register & sign in/out
+  - [x] Register & sign in/out
 
-  - Client account 
+  - [ ] Client account 
 
-  - Research bar 
+  - [ ] Research bar 
 
-  - Newsletter (only add the email address to the database)
+  - [ ] Newsletter (only add the email address to the database)
 
-  - The shopping cart must work (add / remove / calculate / order)
+  - [ ] The shopping cart must work (add / remove / calculate / order)
 
     
 

@@ -114,7 +114,7 @@ exports.login = (req,res) => {
     res.render(process.cwd() + "/views/login", {shop : true, login, username: user.username, email: user.email });
 };
 
-// POST UPDATE
+// POST UPDATE (USERNAME OR EMAIL)
 exports.update = async (req, res) => {
     if (!req.body.email) {
         req.body.email = req.session.user.email;
@@ -128,26 +128,49 @@ exports.update = async (req, res) => {
         return;
     }
     req.body.id = req.session.user.id;
-    console.log(req.body);
-    // if (!req.body.password) {
-        let userInfo = {
-            id: req.body.id,
-            username: req.body.username,
-            email: req.body.email
-        };
-        user.update(userInfo, (updatedId) => { // call update function to update user. if there is no error this function will return it's id
-            if(updatedId) { // Get the updated user data by it's id and store it in a session
-                user.find(updatedId, (result) => {
-                    req.session.user = result;
-                    console.log("Update succesful.");
-                    res.redirect('/login.html'); // redirect user to login & security
-                });
-            }
-            else {
-                console.log('Error updating user...');
-            }
-        });
-    // }
+    let userInfo = {
+        id: req.body.id,
+        username: req.body.username,
+        email: req.body.email
+    };
+    user.update(userInfo, (updatedId) => { // call update function to update user. if there is no error this function will return it's id
+        if(updatedId) { // Get the updated user data by it's id and store it in a session
+            user.find(updatedId, (result) => {
+                req.session.user = result;
+                console.log("User info update succesful.");
+                res.redirect('/login.html'); // redirect user to login & security
+            });
+        }
+        else {
+            console.log('Error updating user...');
+        }
+    });
+};
+
+// POST UPDATE PASSWORD
+exports.updatePassword = async (req, res) => {
+    const validation = validatePassword(req.body);
+    if (validation.error) { // if body doesn"t exist or anything then 400 Bad request
+        res.status(400).send(validation.error.details[0].message);
+        return;
+    }
+    req.body.id = req.session.user.id;
+    let userInfo = {
+        id: req.body.id,
+        password: req.body.password
+    };
+    user.updatePassword(userInfo, (updatedId) => { // call update function to update user. if there is no error this function will return it's id
+        if(updatedId) { // Get the updated user data by it's id and store it in a session
+            user.find(updatedId, (result) => {
+                req.session.user = result;
+                console.log("Password update succesful.");
+                res.redirect('/login.html'); // redirect user to login & security
+            });
+        }
+        else {
+            console.log('Error updating user...');
+        }
+    });
 };
 
 // POST REGISTER
@@ -253,7 +276,7 @@ exports.contact = async (req, res) => {
 };
 
 // VALIDATION functions using Joi
-function validateUser(user) {
+function validateUser(body) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
         username: Joi.string(),
@@ -261,16 +284,16 @@ function validateUser(user) {
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
         repeat_password: Joi.ref('password'),
     }).with('password', 'repeat_password');
-    return schema.validate(user);
+    return schema.validate(body);
 }
-function validateEmail(mail) {
+function validateEmail(body) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
         email: Joi.string().email({ minDomainSegments: 2 })
     });
-    return schema.validate(mail);
+    return schema.validate(body);
 }
-function validateContact(contact) {
+function validateContact(body) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
         username: Joi.string(),
@@ -278,13 +301,21 @@ function validateContact(contact) {
         subject: Joi.string(),
         message: Joi.string(),
     });
-    return schema.validate(contact);
+    return schema.validate(body);
 }
-function validateUpdate(user) {
+function validateUpdate(body) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
         username: Joi.string(),
         email: Joi.string().email({ minDomainSegments: 2 }),
     });
-    return schema.validate(user);
+    return schema.validate(body);
+}
+function validatePassword(body) {
+    const Joi = require('joi');
+    const schema = Joi.object({ // we create a joi object with the valid schema to be verified
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+        repeat_password: Joi.ref('password'),
+    }).with('password', 'repeat_password');
+    return schema.validate(body);
 }

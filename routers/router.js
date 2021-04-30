@@ -30,5 +30,6 @@ router.post("/logout", controller.logout);
 router.post("/newsletter", controller.newsletter);
 router.post("/contact", controller.contact);
 router.post("/update", controller.update);
+router.post("/updatePassword", controller.updatePassword);
 
 module.exports = router;

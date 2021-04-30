@@ -46,10 +46,21 @@ User.prototype = {
         });
     },
 
-    // UPDATE USER IN DB
+    // UPDATE USER OR EMAIL IN DB
     update : function(body, callback) { // body is an object
         let sql = "UPDATE users set username = ?, email = ? WHERE id = ?"; // prepare the sql query
         pool.query(sql, [body.username, body.email, body.id], (err, result) => { // call the query give it the sql string and the values (bind array)
+            if(err) throw err;
+            callback(body.id); // return the updated id if there is no error
+        });
+    },
+
+    // UPDATE PASSWORD IN DB
+    updatePassword : function(body, callback) { // body is an object
+        var password = body.password;
+        body.password = bcrypt.hashSync(password, 10); // Hash the password before insert it into the database.
+        let sql = "UPDATE users set password = ? WHERE id = ?"; // prepare the sql query
+        pool.query(sql, [body.password, body.id], (err, result) => { // call the query give it the sql string and the values (bind array)
             if(err) throw err;
             callback(body.id); // return the updated id if there is no error
         });

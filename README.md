@@ -20,7 +20,10 @@ Freshshop already owns the frontend part of the project. You must now implement 
 
   - [x] Register & sign in/out
 
-  - [ ] Client account 
+  - [x] Client account
+    - [x] Update username
+    - [x] Update email
+    - [ ] Update password
 
   - [ ] Research bar 
 

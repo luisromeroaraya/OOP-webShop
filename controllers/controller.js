@@ -96,6 +96,16 @@ exports.renderWishListPage = (req,res) => {
     res.render(process.cwd() + "/views/wishlist", {shop : true, login});
 };
 
+// CLIENT AREA
+exports.login = (req,res) => {
+    let login = false;
+    let user = req.session.user;
+    if (user) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/login", {shop : true, login, username: user.username, email: user.email });
+};
+
 // POST REGISTER
 exports.register = async (req, res) => {
     const validation = validateUser(req.body);

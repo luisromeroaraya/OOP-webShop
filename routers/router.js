@@ -21,6 +21,8 @@ router.get("/shop-detail.html", controller.renderShopDetailPage);
 router.get("/shop.html", controller.renderShopPage);
 router.get("/wishlist.html", controller.renderWishListPage);
 
+router.get("/login.html", controller.login);
+
 router.post("/register", controller.register);
 router.post("/signin", controller.signin);
 router.post("/logout", controller.logout);

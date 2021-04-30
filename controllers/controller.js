@@ -116,37 +116,38 @@ exports.login = (req,res) => {
 
 // POST UPDATE
 exports.update = async (req, res) => {
-    console.log(req.body);
     if (!req.body.email) {
         req.body.email = req.session.user.email;
     }
     if (!req.body.username) {
         req.body.username = req.session.user.username;
     }
+    const validation = validateUpdate(req.body);
+    if (validation.error) { // if body doesn"t exist or anything then 400 Bad request
+        res.status(400).send(validation.error.details[0].message);
+        return;
+    }
+    req.body.id = req.session.user.id;
     console.log(req.body);
-    // const validation = validateUpdate(req.body);
-    // if (validation.error) { // if body doesn"t exist or username too short then 400 Bad request
-    //     res.status(400).send(validation.error.details[0].message);
-    //     return;
+    // if (!req.body.password) {
+        let userInfo = {
+            id: req.body.id,
+            username: req.body.username,
+            email: req.body.email
+        };
+        user.update(userInfo, (updatedId) => { // call update function to update user. if there is no error this function will return it's id
+            if(updatedId) { // Get the updated user data by it's id and store it in a session
+                user.find(updatedId, (result) => {
+                    req.session.user = result;
+                    console.log("Update succesful.");
+                    res.redirect('/login.html'); // redirect user to login & security
+                });
+            }
+            else {
+                console.log('Error updating user...');
+            }
+        });
     // }
-    // let userInfo = {
-    //     username: req.body.username,
-    //     email: req.body.email,
-    //     password: req.body.password
-    // };
-    // user.create(userInfo, (lastId) => { // call create function to create a new user. if there is no error this function will return it's id
-    //     if(lastId) { // Get the user data by it's id and store it in a session
-    //         user.find(lastId, (result) => {
-    //             req.session.user = result;
-    //             console.log(result);
-    //             console.log("Registration succesful.");
-    //             res.redirect('/'); // redirect user to home
-    //         });
-    //     }
-    //     else {
-    //         console.log('Error creating a new user...');
-    //     }
-    // });
 };
 
 // POST REGISTER
@@ -278,4 +279,12 @@ function validateContact(contact) {
         message: Joi.string(),
     });
     return schema.validate(contact);
+}
+function validateUpdate(user) {
+    const Joi = require('joi');
+    const schema = Joi.object({ // we create a joi object with the valid schema to be verified
+        username: Joi.string(),
+        email: Joi.string().email({ minDomainSegments: 2 }),
+    });
+    return schema.validate(user);
 }

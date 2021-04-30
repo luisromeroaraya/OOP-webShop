@@ -6,6 +6,10 @@ const user = new User(); // CREATE USER OBJECT
 const Newsletter = require("../core/newsletter");
 const newsletter = new Newsletter(); // CREATE NEWSLETTER OBJECT
 
+// IMPORT CONTACT CLASS
+const Contact = require("../core/contact");
+const contact = new Contact(); // CREATE CONTACT OBJECT
+
 // VIEWS
 exports.renderHomePage = (req, res) => {
     let login = false;
@@ -154,7 +158,7 @@ exports.newsletter = async (req, res) => {
         email: req.body.email,
     };
     newsletter.create(newsletterInfo, (lastId) => { // call create function to create a new newsletter. if there is no error this function will return it's id
-        if(lastId) { // Get the newsletter data by it's id and store it in a session
+        if(lastId) { // Get the newsletter data by it's id
             newsletter.find(lastId, (result) => {
                 console.log(result);
                 console.log("Subscription to newsletter succesful.");
@@ -167,7 +171,34 @@ exports.newsletter = async (req, res) => {
     });
 };
 
-// VALIDATION function using Joi
+// POST CONTACT FORM
+exports.contact = async (req, res) => {
+    const validation = validateContact(req.body);
+    if (validation.error) { // if body doesn"t exist or anything then 400 Bad request
+        res.status(400).send(validation.error.details[0].message);
+        return;
+    }
+    let contactInfo = {
+        username: req.body.username,
+        email: req.body.email,
+        subject: req.body.subject,
+        message: req.body.message,
+    };
+    contact.create(contactInfo, (lastId) => { // call create function to create a new contact. if there is no error this function will return it's id
+        if(lastId) { // Get the contact data by it's id
+            contact.find(lastId, (result) => {
+                console.log(result);
+                console.log("Contact form sent.");
+                res.redirect('/'); // redirect contact to home
+            });
+        }
+        else {
+            console.log('Error sending contact form...');
+        }
+    });
+};
+
+// VALIDATION functions using Joi
 function validateUser(user) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
@@ -178,11 +209,20 @@ function validateUser(user) {
     }).with('password', 'repeat_password');
     return schema.validate(user);
 }
-
 function validateEmail(mail) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
         email: Joi.string().email({ minDomainSegments: 2 })
     });
     return schema.validate(mail);
+}
+function validateContact(contact) {
+    const Joi = require('joi');
+    const schema = Joi.object({ // we create a joi object with the valid schema to be verified
+        username: Joi.string().required(),
+        email: Joi.string().email({ minDomainSegments: 2 }),
+        subject: Joi.string().required(),
+        message: Joi.string().required(),
+    });
+    return schema.validate(contact);
 }

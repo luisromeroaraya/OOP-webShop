@@ -25,5 +25,6 @@ router.post("/register", controller.register);
 router.post("/signin", controller.signin);
 router.post("/logout", controller.logout);
 router.post("/newsletter", controller.newsletter);
+router.post("/contact", controller.contact);
 
 module.exports = router;

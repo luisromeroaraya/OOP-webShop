@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="registerModalLabel">Register</h5>
+            <h2 class="modal-title" id="registerModalLabel">Register</h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -15,35 +15,36 @@
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
                         <input name="username" class="form-control" placeholder="Username" type="text">
-                    </div> <!-- form-group// -->
+                    </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                             </div>
                         <input name="email" class="form-control" placeholder="Email address" type="email">
-                    </div> <!-- form-group// -->
+                    </div>
                     <!-- <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                         </div>
                         <input name="" class="form-control" placeholder="Phone number" type="text">
-                    </div> form-group// -->
+                    </div> -->
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
                         <input name="password" class="form-control" placeholder="Create password" type="password">
-                    </div> <!-- form-group// -->
+                    </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
                         <input name="repeat_password" class="form-control" placeholder="Repeat password" type="password">
-                    </div> <!-- form-group// -->
-                    <hr class="my-4">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-lg btn-success btn-block text-uppercase">Register</button>
-                    </div> <!-- form-group// -->      
+                    </div>
+                    <div class="submit-button text-center">
+                        <button class="btn hvr-hover" id="submit" type="submit">Register</button>
+                        <div id="msgSubmit" class="h3 text-center hidden"></div>
+                        <div class="clearfix"></div>
+                    </div>
                     <!-- <p class="text-center">Have an account? <a href="">Log In</a> </p> -->
                 </form>
             </div>

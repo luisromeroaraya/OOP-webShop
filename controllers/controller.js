@@ -71,6 +71,14 @@ exports.renderMyAccountPage = (req,res) => {
     }
     res.render(process.cwd() + "/views/my-account", {shop : true, login});
 };
+exports.renderOurLocation = (req,res) => {
+    let login = false;
+    let user = req.session.user;
+    if (user) {
+        login = true;
+    }
+    res.render(process.cwd() + "/views/our-location", {shop : true, login});
+};
 exports.renderShopDetailPage = (req,res) => {
     let login = false;
     let user = req.session.user;
@@ -104,6 +112,41 @@ exports.login = (req,res) => {
         login = true;
     }
     res.render(process.cwd() + "/views/login", {shop : true, login, username: user.username, email: user.email });
+};
+
+// POST UPDATE
+exports.update = async (req, res) => {
+    console.log(req.body);
+    if (!req.body.email) {
+        req.body.email = req.session.user.email;
+    }
+    if (!req.body.username) {
+        req.body.username = req.session.user.username;
+    }
+    console.log(req.body);
+    // const validation = validateUpdate(req.body);
+    // if (validation.error) { // if body doesn"t exist or username too short then 400 Bad request
+    //     res.status(400).send(validation.error.details[0].message);
+    //     return;
+    // }
+    // let userInfo = {
+    //     username: req.body.username,
+    //     email: req.body.email,
+    //     password: req.body.password
+    // };
+    // user.create(userInfo, (lastId) => { // call create function to create a new user. if there is no error this function will return it's id
+    //     if(lastId) { // Get the user data by it's id and store it in a session
+    //         user.find(lastId, (result) => {
+    //             req.session.user = result;
+    //             console.log(result);
+    //             console.log("Registration succesful.");
+    //             res.redirect('/'); // redirect user to home
+    //         });
+    //     }
+    //     else {
+    //         console.log('Error creating a new user...');
+    //     }
+    // });
 };
 
 // POST REGISTER
@@ -235,4 +278,14 @@ function validateContact(contact) {
         message: Joi.string().required(),
     });
     return schema.validate(contact);
+}
+function validateUpdate(user) {
+    const Joi = require('joi');
+    const schema = Joi.object({ // we create a joi object with the valid schema to be verified
+        username: Joi.string(),
+        email: Joi.string().email({ minDomainSegments: 2 }),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+        repeat_password: Joi.ref('password'),
+    }).with('password', 'repeat_password');
+    return schema.validate(user);
 }

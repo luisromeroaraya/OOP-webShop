@@ -17,6 +17,7 @@ router.get("/contact-us.html", controller.renderContactUsPage);
 router.get("/gallery.html", controller.renderGalleryPage);
 router.get("/index.html", controller.renderIndexPage);
 router.get("/my-account.html", controller.renderMyAccountPage);
+router.get("/our-location.html", controller.renderOurLocation);
 router.get("/shop-detail.html", controller.renderShopDetailPage);
 router.get("/shop.html", controller.renderShopPage);
 router.get("/wishlist.html", controller.renderWishListPage);
@@ -28,5 +29,6 @@ router.post("/signin", controller.signin);
 router.post("/logout", controller.logout);
 router.post("/newsletter", controller.newsletter);
 router.post("/contact", controller.contact);
+router.post("/update", controller.update);
 
 module.exports = router;

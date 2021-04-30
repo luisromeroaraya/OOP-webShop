@@ -24,7 +24,7 @@ Freshshop already owns the frontend part of the project. You must now implement 
 
   - [ ] Research bar 
 
-  - [ ] Newsletter (only add the email address to the database)
+  - [x] Newsletter (only add the email address to the database)
 
   - [ ] The shopping cart must work (add / remove / calculate / order)
 
@@ -35,7 +35,7 @@ Freshshop already owns the frontend part of the project. You must now implement 
 - [ ] All img should be displayed dynamically
 - [ ] The shop filters are working (sidebar shop)
 - [ ] Wishlist
-- [ ] Contact Us
+- [x] Contact Us
 
 ### Miscellanous information
 **Do not connect the platform to a payment system**

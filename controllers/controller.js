@@ -1,8 +1,10 @@
 // IMPORT USER CLASS
 const User = require("../core/user");
+const user = new User(); // CREATE USER OBJECT
 
-// CREATE USER OBJECT
-const user = new User();
+// IMPORT NEWSLETTER CLASS
+const Newsletter = require("../core/newsletter");
+const newsletter = new Newsletter(); // CREATE NEWSLETTER OBJECT
 
 // VIEWS
 exports.renderHomePage = (req, res) => {
@@ -107,7 +109,7 @@ exports.register = async (req, res) => {
             user.find(lastId, (result) => {
                 req.session.user = result;
                 console.log(result);
-                console.log(`Registration succesful.`);
+                console.log("Registration succesful.");
                 res.redirect('/'); // redirect user to home
             });
         }
@@ -141,6 +143,30 @@ exports.logout = (req, res, next) => {
     });
 };
 
+// POST NEWSLETTER
+exports.newsletter = async (req, res) => {
+    const validation = validateEmail(req.body);
+    if (validation.error) { // if body doesn"t exist or username too short then 400 Bad request
+        res.status(400).send(validation.error.details[0].message);
+        return;
+    }
+    let newsletterInfo = {
+        email: req.body.email,
+    };
+    newsletter.create(newsletterInfo, (lastId) => { // call create function to create a new newsletter. if there is no error this function will return it's id
+        if(lastId) { // Get the newsletter data by it's id and store it in a session
+            newsletter.find(lastId, (result) => {
+                console.log(result);
+                console.log("Subscription to newsletter succesful.");
+                res.redirect('/'); // redirect user to home
+            });
+        }
+        else {
+            console.log('Error subscribing to newsletter...');
+        }
+    });
+};
+
 // VALIDATION function using Joi
 function validateUser(user) {
     const Joi = require('joi');
@@ -149,7 +175,14 @@ function validateUser(user) {
         email: Joi.string().email({ minDomainSegments: 2 }),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
         repeat_password: Joi.ref('password'),
-        register: ""
     }).with('password', 'repeat_password');
     return schema.validate(user);
+}
+
+function validateEmail(mail) {
+    const Joi = require('joi');
+    const schema = Joi.object({ // we create a joi object with the valid schema to be verified
+        email: Joi.string().email({ minDomainSegments: 2 })
+    });
+    return schema.validate(mail);
 }

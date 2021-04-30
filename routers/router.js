@@ -24,5 +24,6 @@ router.get("/wishlist.html", controller.renderWishListPage);
 router.post("/register", controller.register);
 router.post("/signin", controller.signin);
 router.post("/logout", controller.logout);
+router.post("/newsletter", controller.newsletter);
 
 module.exports = router;

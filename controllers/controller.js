@@ -255,7 +255,7 @@ exports.contact = async (req, res) => {
 function validateUser(user) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
-        username: Joi.string().required(),
+        username: Joi.string(),
         email: Joi.string().email({ minDomainSegments: 2 }),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
         repeat_password: Joi.ref('password'),
@@ -272,20 +272,10 @@ function validateEmail(mail) {
 function validateContact(contact) {
     const Joi = require('joi');
     const schema = Joi.object({ // we create a joi object with the valid schema to be verified
-        username: Joi.string().required(),
-        email: Joi.string().email({ minDomainSegments: 2 }),
-        subject: Joi.string().required(),
-        message: Joi.string().required(),
-    });
-    return schema.validate(contact);
-}
-function validateUpdate(user) {
-    const Joi = require('joi');
-    const schema = Joi.object({ // we create a joi object with the valid schema to be verified
         username: Joi.string(),
         email: Joi.string().email({ minDomainSegments: 2 }),
-        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
-        repeat_password: Joi.ref('password'),
-    }).with('password', 'repeat_password');
-    return schema.validate(user);
+        subject: Joi.string(),
+        message: Joi.string(),
+    });
+    return schema.validate(contact);
 }

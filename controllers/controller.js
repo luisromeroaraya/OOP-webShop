@@ -2,6 +2,10 @@
 const User = require("../core/user");
 const user = new User(); // CREATE USER OBJECT
 
+// IMPORT PRODUCT CLASS
+const Product = require("../core/product");
+const product = new Product(); // CREATE PRODUCT OBJECT
+
 // IMPORT NEWSLETTER CLASS
 const Newsletter = require("../core/newsletter");
 const newsletter = new Newsletter(); // CREATE NEWSLETTER OBJECT
@@ -58,7 +62,16 @@ exports.renderGalleryPage = (req,res) => {
     if (user) {
         login = true;
     }
-    res.render(process.cwd() + "/views/gallery", {gallery : true, login});
+    let products;
+    product.list(rows => {
+        if(rows) {
+            products = rows;
+            res.render(process.cwd() + "/views/gallery", {gallery : true, login, products});
+        }
+        else {
+            console.log('Error retrieving products...');
+        }
+    });
 };
 exports.renderIndexPage = (req,res) => {
     res.redirect('/');

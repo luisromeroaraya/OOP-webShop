@@ -35,7 +35,7 @@ Freshshop already owns the frontend part of the project. You must now implement 
 
 ### Nice-to-have features
 
-- [ ] All img should be displayed dynamically
+- [x] All img should be displayed dynamically
 - [ ] The shop filters are working (sidebar shop)
 - [ ] Wishlist
 - [x] Contact Us

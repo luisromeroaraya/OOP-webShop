@@ -62,9 +62,13 @@
                                                     <ul>
                                                         <li><a href="/shop-detail/{{this.id}}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                                        {{#if login}}
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                        {{/if}}
                                                     </ul>
+                                                    {{#if login}}
                                                     <a class="cart" href="#">Add to Cart</a>
+                                                    {{/if}}
                                                 </div>
                                             </div>
                                             <div class="why-text">
@@ -91,7 +95,9 @@
                                                         <ul>
                                                             <li><a href="/shop-detail/{{this.id}}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                                            {{#if login}}
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                            {{/if}}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -102,7 +108,9 @@
                                                 <h4> {{this.name}} </h4>
                                                 <h5> {{this.price}} € / kg </h5>
                                                 <p>{{this.description}}</p>
+                                                {{#if login}}
                                                 <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                                {{/if}}
                                             </div>
                                         </div>
                                     </div>

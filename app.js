@@ -26,8 +26,19 @@ app.use("/images", express.static(__dirname + "public/images"));
 app.use("/php", express.static(__dirname + "public/php"));
 app.use("/webfonts", express.static(__dirname + "public/webfonts"));
 
+// CREATE HANDLEBARS HELPERS
+const hbs = exphbs.create({
+    extname: '.hbs',
+    helpers: {
+        changeDate: function(datetime) {
+            var date = new Date(datetime);
+            return date.toString().slice(4,16);
+        }
+    }
+});
+
 // TEMPLATE ENGINE EXPRESS HANDBLEBARS
-app.engine('hbs', exphbs({ extname: '.hbs' }));
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 // SESSION

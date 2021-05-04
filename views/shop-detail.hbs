@@ -61,14 +61,14 @@
                             </div>
                         </li>
                     </ul>
-
+                    {{#if login}}
                     <div class="price-box-bar">
                         <div class="cart-and-bay-btn">
-                            <a class="btn hvr-hover" data-fancybox-close="" href="#">Buy New</a>
+                            {{!-- <a class="btn hvr-hover" data-fancybox-close="" href="#">Buy New</a> --}}
                             <a class="btn hvr-hover" data-fancybox-close="" href="#">Add to cart</a>
                         </div>
                     </div>
-
+                    {{/if}}
                     <div class="add-to-btn">
                         <div class="add-comp">
                             <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="media-body">
                             <p>{{this.review}}</p>
-                            <small class="text-muted">Posted by {{this.user_id}} on {{this.date}}</small>
+                            <small class="text-muted">Posted by {{this.user_id}} on {{changeDate this.date}}</small>
                         </div>
                     </div>
                     <hr>

@@ -6,6 +6,10 @@ const user = new User(); // CREATE USER OBJECT
 const Product = require("../core/product");
 const product = new Product(); // CREATE PRODUCT OBJECT
 
+// IMPORT REVIEW CLASS
+const Review = require("../core/review");
+const review = new Review(); // CREATE REVIEW OBJECT
+
 // IMPORT NEWSLETTER CLASS
 const Newsletter = require("../core/newsletter");
 const newsletter = new Newsletter(); // CREATE NEWSLETTER OBJECT
@@ -98,10 +102,20 @@ exports.renderShopDetailPage = (req,res) => {
         login = true;
     }
     let item;
+    let reviews;
     product.find(parseInt(req.params.id), result => {
         if(result) {
             item = result;
-            res.render(process.cwd() + "/views/shop-detail", {shop : true, login, item});
+            review.search(parseInt(item.id), rows => {
+                if(rows) {
+                    reviews = rows;
+                    res.render(process.cwd() + "/views/shop-detail", {shop : true, login, item, reviews});
+                }
+                else {
+                    res.render(process.cwd() + "/views/shop-detail", {shop : true, login, item});
+                    console.log('No reviews available for this product...');
+                }
+            });
         }
         else {
             console.log('Error retrieving products...');

@@ -98,7 +98,7 @@ exports.renderShopDetailPage = (req,res) => {
         login = true;
     }
     let item;
-    product.get(parseInt(req.params.id), result => {
+    product.find(parseInt(req.params.id), result => {
         if(result) {
             item = result;
             res.render(process.cwd() + "/views/shop-detail", {shop : true, login, item});
@@ -132,6 +132,25 @@ exports.renderWishListPage = (req,res) => {
         login = true;
     }
     res.render(process.cwd() + "/views/wishlist", {shop : true, login});
+};
+
+// POST SEARCH
+exports.search = (req,res) => {
+    let login = false;
+    let user = req.session.user;
+    if (user) {
+        login = true;
+    }
+    let products;
+    product.search(req.body.keyword, rows => {
+        if(rows) {
+            products = rows;
+            res.render(process.cwd() + "/views/shop", {shop : true, login, products});
+        }
+        else {
+            console.log('Error retrieving products...');
+        }
+    });
 };
 
 // CLIENT AREA

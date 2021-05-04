@@ -106,7 +106,16 @@ exports.renderShopPage = (req,res) => {
     if (user) {
         login = true;
     }
-    res.render(process.cwd() + "/views/shop", {shop : true, login});
+    let products;
+    product.list(rows => {
+        if(rows) {
+            products = rows;
+            res.render(process.cwd() + "/views/shop", {shop : true, login, products});
+        }
+        else {
+            console.log('Error retrieving products...');
+        }
+    });
 };
 exports.renderWishListPage = (req,res) => {
     let login = false;

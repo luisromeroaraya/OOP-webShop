@@ -18,7 +18,7 @@ router.get("/gallery.html", controller.renderGalleryPage);
 router.get("/index.html", controller.renderIndexPage);
 router.get("/my-account.html", controller.renderMyAccountPage);
 router.get("/our-location.html", controller.renderOurLocation);
-router.get("/shop-detail.html", controller.renderShopDetailPage);
+router.get("/shop-detail/:id", controller.renderShopDetailPage);
 router.get("/shop.html", controller.renderShopPage);
 router.get("/wishlist.html", controller.renderWishListPage);
 

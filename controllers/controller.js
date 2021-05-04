@@ -18,7 +18,6 @@ const contact = new Contact(); // CREATE CONTACT OBJECT
 exports.renderHomePage = (req, res) => {
     let login = false;
     let user = req.session.user;
-    console.log(user);
     if (user) {
         login = true;
     }
@@ -98,7 +97,16 @@ exports.renderShopDetailPage = (req,res) => {
     if (user) {
         login = true;
     }
-    res.render(process.cwd() + "/views/shop-detail", {shop : true, login});
+    let item;
+    product.get(parseInt(req.params.id), result => {
+        if(result) {
+            item = result;
+            res.render(process.cwd() + "/views/shop-detail", {shop : true, login, item});
+        }
+        else {
+            console.log('Error retrieving products...');
+        }
+    });
 };
 exports.renderShopPage = (req,res) => {
     let login = false;
@@ -211,7 +219,6 @@ exports.register = async (req, res) => {
         if(lastId) { // Get the user data by it's id and store it in a session
             user.find(lastId, (result) => {
                 req.session.user = result;
-                console.log(result);
                 console.log("Registration succesful.");
                 res.redirect('/'); // redirect user to home
             });
@@ -227,7 +234,6 @@ exports.signin = (req, res, next) => {
     user.signin(req.body.username, req.body.password, (rows) => {
         if (rows) {
             req.session.user = rows;
-            console.log(req.session.user);
             console.log(`Signed in as ${req.session.user.username}.`);
             res.redirect('/'); // redirect user to home
         }
@@ -259,7 +265,6 @@ exports.newsletter = async (req, res) => {
     newsletter.create(newsletterInfo, (lastId) => { // call create function to create a new newsletter. if there is no error this function will return it's id
         if(lastId) { // Get the newsletter data by it's id
             newsletter.find(lastId, (result) => {
-                console.log(result);
                 console.log("Subscription to newsletter succesful.");
                 res.redirect('/'); // redirect user to home
             });
@@ -286,7 +291,6 @@ exports.contact = async (req, res) => {
     contact.create(contactInfo, (lastId) => { // call create function to create a new contact. if there is no error this function will return it's id
         if(lastId) { // Get the contact data by it's id
             contact.find(lastId, (result) => {
-                console.log(result);
                 console.log("Contact form sent.");
                 res.redirect('/'); // redirect contact to home
             });

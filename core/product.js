@@ -18,7 +18,7 @@ Product.prototype = {
         });
     }, 
 
-    find : function(product = null, callback) { // Find the product data by id or name.
+    get : function(product = null, callback) { // Get the product data by id or name.
         if(product) { // if the product variable is defined
             var field = Number.isInteger(product) ? 'id' : 'name'; // if product = number return field = id, if product = string return field = name.
         }

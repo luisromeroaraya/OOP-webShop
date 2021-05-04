@@ -31,14 +31,17 @@ Freshshop already owns the frontend part of the project. You must now implement 
 
   - [ ] The shopping cart must work (add / remove / calculate / order)
 
-    
-
 ### Nice-to-have features
 
 - [x] All img should be displayed dynamically
 - [ ] The shop filters are working (sidebar shop)
 - [ ] Wishlist
 - [x] Contact Us
+
+### Extra features I must also do
+- [x] Show dynamic content in sidebar shop
+- [x] Show dynamic content in shop-detail
+- [ ] Reviews system
 
 ### Miscellanous information
 **Do not connect the platform to a payment system**

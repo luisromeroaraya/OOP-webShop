@@ -25,7 +25,7 @@ Freshshop already owns the frontend part of the project. You must now implement 
     - [x] Update email
     - [x] Update password
 
-  - [ ] Research bar 
+  - [x] Research bar 
 
   - [x] Newsletter (only add the email address to the database)
 
